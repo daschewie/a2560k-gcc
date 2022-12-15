@@ -4,7 +4,7 @@ Newlib syscalls and linker script for Foenix A2560K computer
 ## Setup
 - Compile and install elf2pgz from https://github.com/csoren/elf2pgz
 - Compile and install m68k-elf GCC from https://github.com/kentosama/m68k-elf-gcc
-- Update CC and BUILD variables in Makefile to use gcc install location
+- Update CC, AR and BUILD variables in Makefile to use gcc install location
 - Run the following commands to install:
 ```
 make
