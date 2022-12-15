@@ -9,6 +9,34 @@
 #define FILE_TABLE_OFFSET   -3
 #define CONSOLE             0
 
+#define FA_READ             0x01
+#define FA_WRITE            0x02
+#define FA_OPEN_EXISTING    0x00
+#define FA_CREATE_NEW       0x04
+#define FA_CREATE_ALWAYS    0x08
+#define FA_OPEN_ALWAYS      0x10
+#define FA_OPEN_APPEND      0x30
+
+#define FSYS_ERR_DISK_ERR               -18 /* (1) A hard error occurred in the low level disk I/O layer */
+#define FSYS_ERR_INT_ERR                -19 /* (2) Assertion failed */
+#define FSYS_ERR_NOT_READY              -20 /* (3) The physical drive cannot work */
+#define FSYS_ERR_NO_FILE                -21 /* (4) Could not find the file */
+#define FSYS_ERR_NO_PATH                -22 /* (5) Could not find the path */
+#define FSYS_ERR_INVALID_NAME           -23 /* (6) The path name format is invalid */
+#define FSYS_ERR_DENIED                 -24 /* (7) Access denied due to prohibited access or directory full */
+#define FSYS_ERR_EXIST                  -25 /* (8) Access denied due to prohibited access */
+#define FSYS_ERR_INVALID_OBJECT         -26 /* (9) The file/directory object is invalid */
+#define FSYS_ERR_WRITE_PROTECTED        -27 /* (10) The physical drive is write protected */
+#define FSYS_ERR_INVALID_DRIVE          -28 /* (11) The logical drive number is invalid */
+#define FSYS_ERR_NOT_ENABLED            -29 /* (12) The volume has no work area */
+#define FSYS_ERR_NO_FILESYSTEM          -30 /* (13) There is no valid FAT volume */
+#define FSYS_ERR_MKFS_ABORTED           -31 /* (14) The f_mkfs() aborted due to any problem */
+#define FSYS_ERR_TIMEOUT                -32 /* (15) Could not get a grant to access the volume within defined period */
+#define FSYS_ERR_LOCKED                 -33 /* (16) The operation is rejected according to the file sharing policy */
+#define FSYS_ERR_NOT_ENOUGH_CORE        -34 /* (17) LFN working buffer could not be allocated */
+#define FSYS_ERR_TOO_MANY_OPEN_FILES    -35 /* (18) Number of open files > FF_FS_LOCK */
+#define FSYS_ERR_INVALID_PARAMETER      -36 /* (19) Given parameter is invalid */
+
 #define KFN_EXIT                0x00    /* Quick the current program and return to the command line */
 #define KFN_WARMBOOT            0x01    /* Do a soft re-initialization */
 #define KFN_INT_REGISTER        0x02    /* Set a handler for an exception / interrupt */
@@ -103,7 +131,7 @@
 #define sys_fsys_opendir(a) mcp_syscall(KFN_OPENDIR,a,0,0,0)
 #define sys_fsys_closedir(a) mcp_syscall(KFN_CLOSEDIR,a,0,0,0)
 #define sys_fsys_readdir(a,b) mcp_syscall(KFN_READDIR,a,b,0,0)
-#define sys_fsys_findfirst(a,b,c) mcp_syscall(KFN_FINDFIRST,a,b,c,0)
+#define sys_fsys_findfirst(a,b,c) mcp_syscall(KFN_FINDFIRST,(long)a,(long)b,(long)c,0)
 #define sys_fsys_findnext(a,b) mcp_syscall(KFN_FINDNEXT,a,b,0,0)
 #define sys_fsys_delete(a) mcp_syscall(KFN_DELETE,a,0,0,0)
 #define sys_fsys_rename(a,b) mcp_syscall(KFN_RENAME,a,b,0,0)
@@ -141,7 +169,7 @@
 
 #define sys_rtc_get_jiffies() mcp_syscall(KFN_TIME_JIFFIES,0,0,0,0)
 #define sys_rtc_set_time(a) mcp_syscall(KFN_TIME_SETRTC,a,0,0,0)
-#define sys_rtc_get_time() mcp_syscall(KFN_TIME_GETRTC,0,0,0,0)
+#define sys_rtc_get_time(a) mcp_syscall(KFN_TIME_GETRTC,(long)a,0,0,0)
 #define sys_kbd_scancode() mcp_syscall(KFN_KBD_SCANCODE,0,0,0,0)
 #define sys_err_message(a) mcp_syscall(KFN_ERR_MESSAGE,a,0,0,0)
 
@@ -188,5 +216,29 @@
 
 
 extern long mcp_syscall(long d0, long  d1, long d2, long d3, long d4);
+
+int mcp_map_oflags(int oflag);
+
+void mcp_map_errno(int result);
+
+
+struct s_time {
+    short year;
+    short month;
+    short day;
+    short hour;
+    short minute;
+    short second;
+    short is_pm;
+    short is_24hours;
+};
+
+struct s_file_info {
+    long size;
+    unsigned short date;
+    unsigned short time;
+    unsigned char attributes;
+    char name[256];
+}; 
 
 #endif

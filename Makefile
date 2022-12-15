@@ -1,20 +1,31 @@
-CC=/opt/m68k-toolchain/bin/m68k-elf-gcc
-AR=/opt/m68k-toolchain/bin/m68k-elf-ar
-BUILD=/opt/m68k-toolchain/m68k-elf/lib
+CC = /opt/m68k-toolchain/bin/m68k-elf-gcc
+AR = /opt/m68k-toolchain/bin/m68k-elf-ar
+BUILD = /opt/m68k-toolchain/m68k-elf/lib
+OBJ = mcp_syscall.o \
+	  mcp_mapping.o \
+	  no_ops.o \
+	  io_gettimeofday.o \
+	  io_open.o \
+	  io_close.o \
+	  io_write.o \
+	  io_read.o \
+	  io_lseek.o \
+	  io_sbrk.o \
+	  io_exit.o
 
 ALL: liba2560k.a
 
-liba2560k.a: newlib.o mcp_syscall.o
-	$(AR) rcs liba2560k.a newlib.o mcp_syscall.o
+liba2560k.a: $(OBJ)
+	$(AR) rcs $@ $^
 
-newlib.o: newlib.c
-	$(CC) -c newlib.c -o newlib.o
+%.o: %.c
+	$(CC) -c $< -o $@
 
-mcp_syscall.o: mcp_syscall.s
-	$(CC) -c mcp_syscall.s -o mcp_syscall.o
+%.o: %.s
+	$(CC) -c $< -o $@
 
 clean:
-	rm liba2560k.a newlib.o mcp_syscall.o
+	rm *.o *.a
 
 install:
 	cp liba2560k.a $(BUILD)
