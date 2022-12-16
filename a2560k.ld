@@ -1,4 +1,4 @@
-STARTUP(crt0.o)
+STARTUP(mcp-crt0.o)
 OUTPUT_ARCH(m68k)
 OUTPUT_FORMAT(elf32-m68k)
 SEARCH_DIR(.)

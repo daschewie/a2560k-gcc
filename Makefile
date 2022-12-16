@@ -13,7 +13,8 @@ OBJ = mcp_syscall.o \
 	  io_sbrk.o \
 	  io_exit.o
 
-ALL: liba2560k.a
+ALL: liba2560k.a mcp-crt0.o
+
 
 liba2560k.a: $(OBJ)
 	$(AR) rcs $@ $^
@@ -24,9 +25,13 @@ liba2560k.a: $(OBJ)
 %.o: %.s
 	$(CC) -c $< -o $@
 
+%.o: %.S
+	$(CC) -c $< -o $@
+
 clean:
 	rm *.o *.a
 
 install:
 	cp liba2560k.a $(BUILD)
 	cp a2560k.ld $(BUILD)
+	cp mcp-crt0.o $(BUILD)
