@@ -1,17 +1,17 @@
 CC = /opt/m68k-toolchain/bin/m68k-elf-gcc
 AR = /opt/m68k-toolchain/bin/m68k-elf-ar
 BUILD = /opt/m68k-toolchain/m68k-elf/lib
-OBJ = mcp_syscall.o \
-	  mcp_mapping.o \
-	  no_ops.o \
-	  io_gettimeofday.o \
-	  io_open.o \
-	  io_close.o \
-	  io_write.o \
-	  io_read.o \
-	  io_lseek.o \
-	  io_sbrk.o \
-	  io_exit.o
+OBJ = mcp-syscall.o \
+	  mcp-mapping.o \
+	  no-ops.o \
+	  io-gettimeofday.o \
+	  io-open.o \
+	  io-close.o \
+	  io-write.o \
+	  io-read.o \
+	  io-lseek.o \
+	  io-sbrk.o \
+	  io-exit.o
 
 ALL: liba2560k.a mcp-crt0.o
 
