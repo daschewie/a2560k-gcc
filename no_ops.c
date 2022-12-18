@@ -1,13 +1,6 @@
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <sys/fcntl.h>
 #include <sys/times.h>
 #include <sys/errno.h>
-#include <sys/time.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "mcp.h"
 
 #undef errno
 extern int errno;

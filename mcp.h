@@ -48,16 +48,16 @@
 #define KFN_INT_PENDING         0x08    /* Return true if the interrupt is pending */
 #define KFN_SYS_GET_INFO        0x09    /* Get information about the computer */
 
-#define sys_exit(a) mcp_syscall(KFN_EXIT,a,0,0,0)
+#define sys_exit(a) mcp_syscall(KFN_EXIT,(long)a,0,0,0)
 #define sys_warmboot() mcp_syscall(KFN_EXIT,0,0,0,0)
-#define sys_int_register(a,b) mcp_syscall(KFN_INT_REGISTER,a,b,0,0)
-#define sys_int_enable(a) mcp_syscall(KFN_INT_ENABLE,a,0,0,0)
-#define sys_int_disable(a) mcp_syscall(KFN_INT_DISABLE,a,0,0,0)
+#define sys_int_register(a,b) mcp_syscall(KFN_INT_REGISTER,(long)a,(long)b,0,0)
+#define sys_int_enable(a) mcp_syscall(KFN_INT_ENABLE,(long)a,0,0,0)
+#define sys_int_disable(a) mcp_syscall(KFN_INT_DISABLE,(long)a,0,0,0)
 #define sys_int_enable_all() mcp_syscall(KFN_INT_ENABLE_ALL,0,0,0,0)
 #define sys_int_disable_all() mcp_syscall(KFN_INT_DISABLE_ALL,0,0,0,0)
-#define sys_int_clear(a) mcp_syscall(KFN_INT_CLEAR,a,0,0,0)
-#define sys_int_pending(a) mcp_syscall(KFN_INT_PENDING,a,0,0,0)
-#define sys_get_information(a) mcp_syscall(KFN_SYS_GET_INFO,a,0,0,0)
+#define sys_int_clear(a) mcp_syscall(KFN_INT_CLEAR,(long)a,0,0,0)
+#define sys_int_pending(a) mcp_syscall(KFN_INT_PENDING,(long)a,0,0,0)
+#define sys_get_information(a) mcp_syscall(KFN_SYS_GET_INFO,(long)a,0,0,0)
 
 /* Channel system calls */
 
@@ -76,18 +76,18 @@
 #define KFN_CHAN_DEVICE         0x1C    /* Get the number of the device associated with the channel */
 
 
-#define sys_chan_read(a,b,c) mcp_syscall(KFN_CHAN_READ,a,b,c,0)
-#define sys_chan_read_b(a) mcp_syscall(KFN_CHAN_READ_B,a,0,0,0)
-#define sys_chan_read_line(a,b,c) mcp_syscall(KFN_CHAN_READ_LINE,a,b,c,0)
-#define sys_chan_write(a,b,c) mcp_syscall(KFN_CHAN_WRITE,a,b,c,0)
-#define sys_chan_write_b(a,b) mcp_syscall(KFN_CHAN_WRITE_B,a,b,0,0)
-#define sys_chan_flush(a) mcp_syscall(KFN_CHAN_FLUSH,a,0,0,0)
-#define sys_chan_seek(a,b,c) mcp_syscall(KFN_CHAN_SEEK,a,b,c,0)
-#define sys_chan_status(a) mcp_syscall(KFN_CHAN_STATUS,a,0,0,0)
-#define sys_chan_ioctrl(a,b,c,d) mcp_syscall(KFN_CHAN_IOCTRL,a,b,c,d)
-#define sys_chan_register(a) mcp_syscall(KFN_CHAN_REGISTER,a,0,0,0)
-#define sys_chan_open(a,b) mcp_syscall(KFN_CHAN_OPEN,a,b,0,0)
-#define sys_chan_close(a) mcp_syscall(KFN_CHAN_CLOSE,a,0,0,0)
+#define sys_chan_read(a,b,c) mcp_syscall(KFN_CHAN_READ,(long)a,(long)b,(long)c,0)
+#define sys_chan_read_b(a) mcp_syscall(KFN_CHAN_READ_B,(long)a,0,0,0)
+#define sys_chan_read_line(a,b,c) mcp_syscall(KFN_CHAN_READ_LINE,(long)a,(long)b,(long)c,0)
+#define sys_chan_write(a,b,c) mcp_syscall(KFN_CHAN_WRITE,(long)a,(long)b,(long)c,0)
+#define sys_chan_write_b(a,b) mcp_syscall(KFN_CHAN_WRITE_B,(long)a,(long)b,0,0)
+#define sys_chan_flush(a) mcp_syscall(KFN_CHAN_FLUSH,(long)a,0,0,0)
+#define sys_chan_seek(a,b,c) mcp_syscall(KFN_CHAN_SEEK,(long)a,(long)b,(long)c,0)
+#define sys_chan_status(a) mcp_syscall(KFN_CHAN_STATUS,(long)a,0,0,0)
+#define sys_chan_ioctrl(a,b,c,d) mcp_syscall(KFN_CHAN_IOCTRL,(long)a,(long)b,(long)c,(long)d)
+#define sys_chan_register(a) mcp_syscall(KFN_CHAN_REGISTER,(long)a,0,0,0)
+#define sys_chan_open(a,b) mcp_syscall(KFN_CHAN_OPEN,(long)a,(long)b,0,0)
+#define sys_chan_close(a) mcp_syscall(KFN_CHAN_CLOSE,(long)a,0,0,0)
 
 /* Block device system calls */
 
@@ -99,13 +99,13 @@
 #define KFN_BDEV_REGISTER       0x25    /* Register a block device driver */
 #define KFN_STAT                0x2F    /* Check for file existance and return file information */
 
-#define sys_bdev_register(a) mcp_syscall(KFN_BDEV_REGISTER,a,0,0,0)
-#define sys_bdev_read(a,b,c,d) mcp_syscall(KFN_BDEV_GETBLOCK,a,b,c,d)
-#define sys_bdev_write(a,b,c,d) mcp_syscall(KFN_BDEV_PUTBLOCK,a,b,c,d)
-#define sys_bdev_status(a) mcp_syscall(KFN_BDEV_STATUS,a,0,0,0)
-#define sys_bdev_flush(a) mcp_syscall(KFN_BDEV_FLUSH,a,0,0,0)
-#define sys_bdev_ioctrl(a,b,c,d) mcp_syscall(KFN_BDEV_IOCTRL,a,b,c,d)
-#define sys_fsys_stat(a,b) mcp_syscall(KFN_STAT, a, b)
+#define sys_bdev_register(a) mcp_syscall(KFN_BDEV_REGISTER,(long)a,0,0,0)
+#define sys_bdev_read(a,b,c,d) mcp_syscall(KFN_BDEV_GETBLOCK,(long)a,(long)b,(long)c,(long)d)
+#define sys_bdev_write(a,b,c,d) mcp_syscall(KFN_BDEV_PUTBLOCK,(long)a,(long)b,(long)c,(long)d)
+#define sys_bdev_status(a) mcp_syscall(KFN_BDEV_STATUS,(long)a,0,0,0)
+#define sys_bdev_flush(a) mcp_syscall(KFN_BDEV_FLUSH,(long)a,0,0,0)
+#define sys_bdev_ioctrl(a,b,c,d) mcp_syscall(KFN_BDEV_IOCTRL,(long)a,(long)b,(long)c,(long)d)
+#define sys_fsys_stat(a,b) mcp_syscall(KFN_STAT, (long)a,(long)b,0,0)
 
 /* File/Directory system calls */
 
@@ -126,22 +126,22 @@
 #define KFN_GET_CWD             0x3E    /* Get the current working directory */
 #define KFN_LOAD_REGISTER       0x3F    /* Register a file type handler for executable binaries */
 
-#define sys_fsys_open(a,b) mcp_syscall(KFN_OPEN,a,b,0,0)
-#define sys_fsys_close(a) mcp_syscall(KFN_CLOSE,a,0,0,0)
-#define sys_fsys_opendir(a) mcp_syscall(KFN_OPENDIR,a,0,0,0)
-#define sys_fsys_closedir(a) mcp_syscall(KFN_CLOSEDIR,a,0,0,0)
-#define sys_fsys_readdir(a,b) mcp_syscall(KFN_READDIR,a,b,0,0)
+#define sys_fsys_open(a,b) mcp_syscall(KFN_OPEN,(long)a,(long)b,0,0)
+#define sys_fsys_close(a) mcp_syscall(KFN_CLOSE,(long)a,0,0,0)
+#define sys_fsys_opendir(a) mcp_syscall(KFN_OPENDIR,(long)a,0,0,0)
+#define sys_fsys_closedir(a) mcp_syscall(KFN_CLOSEDIR,(long)a,0,0,0)
+#define sys_fsys_readdir(a,b) mcp_syscall(KFN_READDIR,(long)a,(long)b,0,0)
 #define sys_fsys_findfirst(a,b,c) mcp_syscall(KFN_FINDFIRST,(long)a,(long)b,(long)c,0)
-#define sys_fsys_findnext(a,b) mcp_syscall(KFN_FINDNEXT,a,b,0,0)
-#define sys_fsys_delete(a) mcp_syscall(KFN_DELETE,a,0,0,0)
-#define sys_fsys_rename(a,b) mcp_syscall(KFN_RENAME,a,b,0,0)
-#define sys_fsys_mkdir(a) mcp_syscall(KFN_MKDIR,a,0,0,0)
-#define sys_fsys_load(a,b,c) mcp_syscall(KFN_LOAD,a,b,c,0)
-#define sys_fsys_setcwd(a) mcp_syscall(KFN_SET_CWD,a,0,0,0)
-#define sys_fsys_getcwd(a,b) mcp_syscall(KFN_GET_CWD,a,b,0,0)
-#define sys_fsys_get_label(a,b) mcp_syscall(KFN_GET_LABEL,a,b,0,0)
-#define sys_fsys_set_label(a,b) mcp_syscall(KFN_SET_LABEL,a,b,0,0)
-#define sys_fsys_register_loader(a,b) mcp_syscall(KFN_LOAD_REGISTER,a,b,0,0)
+#define sys_fsys_findnext(a,b) mcp_syscall(KFN_FINDNEXT,(long)a,(long)b,0,0)
+#define sys_fsys_delete(a) mcp_syscall(KFN_DELETE,(long)a,0,0,0)
+#define sys_fsys_rename(a,b) mcp_syscall(KFN_RENAME,(long)a,(long)b,0,0)
+#define sys_fsys_mkdir(a) mcp_syscall(KFN_MKDIR,(long)a,0,0,0)
+#define sys_fsys_load(a,b,c) mcp_syscall(KFN_LOAD,(long)a,(long)b,(long)c,0)
+#define sys_fsys_setcwd(a) mcp_syscall(KFN_SET_CWD,(long)a,0,0,0)
+#define sys_fsys_getcwd(a,b) mcp_syscall(KFN_GET_CWD,(long)a,(long)b,0,0)
+#define sys_fsys_get_label(a,b) mcp_syscall(KFN_GET_LABEL,(long)a,(long)b,0,0)
+#define sys_fsys_set_label(a,b) mcp_syscall(KFN_SET_LABEL,(long)a,(long)b,0,0)
+#define sys_fsys_register_loader(a,b) mcp_syscall(KFN_LOAD_REGISTER,(long)a,(long)b,0,0)
 
 /* Process and memory calls */
 
@@ -152,11 +152,11 @@
 #define KFN_VAR_SET             0x44    /* Set the value of a system variable */
 #define KFN_VAR_GET             0x45    /* Get the value of a system variable */
 
-#define sys_proc_run(a,b,c) mcp_syscall(KFN_RUN,a,b,c,0)
+#define sys_proc_run(a,b,c) mcp_syscall(KFN_RUN,(long)a,(long)b,(long)c,0)
 #define sys_mem_get_ramtop() mcp_syscall(KFN_MEM_GET_RAMTOP,0,0,0,0)
-#define sys_mem_reserve(a) mcp_syscall(KFN_MEM_RESERVE,a,0,0,0)
-#define sys_var_set(a,b) mcp_syscall(KFN_VAR_SET,a,b,0,0)
-#define sys_var_get(a) mcp_syscall(KFN_VAR_GET,a,0,0,0)
+#define sys_mem_reserve(a) mcp_syscall(KFN_MEM_RESERVE,(long)a,0,0,0)
+#define sys_var_set(a,b) mcp_syscall(KFN_VAR_SET,(long)a,(long)b,0,0)
+#define sys_var_get(a) mcp_syscall(KFN_VAR_GET,(long)a,0,0,0)
 
 /* Misc calls */
 
@@ -168,10 +168,10 @@
 #define KFN_ERR_MESSAGE         0x55    /* Return an error description, given an error number */
 
 #define sys_rtc_get_jiffies() mcp_syscall(KFN_TIME_JIFFIES,0,0,0,0)
-#define sys_rtc_set_time(a) mcp_syscall(KFN_TIME_SETRTC,a,0,0,0)
+#define sys_rtc_set_time(a) mcp_syscall(KFN_TIME_SETRTC,(long)a,0,0,0)
 #define sys_rtc_get_time(a) mcp_syscall(KFN_TIME_GETRTC,(long)a,0,0,0)
 #define sys_kbd_scancode() mcp_syscall(KFN_KBD_SCANCODE,0,0,0,0)
-#define sys_err_message(a) mcp_syscall(KFN_ERR_MESSAGE,a,0,0,0)
+#define sys_err_message(a) mcp_syscall(KFN_ERR_MESSAGE,(long)a,0,0,0)
 
 /* Text Device Calls */
 
@@ -195,24 +195,24 @@
 #define KFN_TXT_SET_CURSOR_VIS  0x71    /* Set cursor visibility */
 #define KFN_TXT_GET_SIZES       0x72    /* Get the screen size (visible text cells and total pixel resolution) */
 
-#define sys_txt_init_screen(a) mcp_syscall(KFN_TXT_INIT_SCREEN,a,0,0,0)
-#define sys_txt_set_resolution(a,b,c) mcp_syscall(KFN_TXT_SET_RESOLUTION,a,b,c,0)
-#define sys_txt_get_capabilities(a) mcp_syscall(KFN_TXT_GET_CAPS,a,0,0,0)
-#define sys_txt_set_mode(a,b) mcp_syscall(KFN_TXT_SET_MODE,a,b,0,0)
-#define sys_text_setsizes(a) mcp_syscall(KFN_TXT_SETSIZES,a,0,0,0)
-#define sys_txt_set_border(a,b,c) mcp_syscall(KFN_TXT_SET_BORDER,a,b,c,0)
-#define sys_txt_set_border_color(a,b,c,d) mcp_syscall(KFN_TXT_SET_BORDERCOLOR,a,b,c,d)
-#define sys_txt_set_font(a,b,c,d) mcp_syscall(KFN_TXT_SET_FONT,a,b,c,d)
-#define sys_txt_set_cursor(a,b,c,d) mcp_syscall(KFN_TXT_SET_CURSOR,a,b,c,d)
-#define sys_txt_set_region(a,b) mcp_syscall(KFN_TXT_SET_REGION,a,b,0,0)
-#define sys_txt_get_region(a,b) mcp_syscall(KFN_TXT_GET_REGION,a,b,0,0)
-#define sys_txt_set_color(a,b,c) mcp_syscall(KFN_TXT_SET_COLOR,a,b,c,0)
-#define sys_txt_get_color(a,b,c) mcp_syscall(KFN_TXT_GET_COLOR,a,b,c,0)
-#define sys_txt_set_xy(a,b,c) mcp_syscall(KFN_TXT_SET_XY,a,b,c,0)
-#define sys_txt_get_xy(a,b) mcp_syscall(KFN_TXT_GET_XY,a,b,0,0)
-#define sys_txt_scroll(a,b,c) mcp_syscall(KFN_TXT_SCROLL,a,b,c,0)
-#define sys_txt_set_cursor_visible(a,b) mcp_syscall(KFN_TXT_SET_CURSOR_VIS,a,b,0,0)
-#define sys_txt_get_sizes(a,b,c) mcp_syscall(KFN_TXT_GET_SIZES,a,b,c,0)
+#define sys_txt_init_screen(a) mcp_syscall(KFN_TXT_INIT_SCREEN,(long)a,0,0,0)
+#define sys_txt_set_resolution(a,b,c) mcp_syscall(KFN_TXT_SET_RESOLUTION,(long)a,(long)b,(long)c,0)
+#define sys_txt_get_capabilities(a) mcp_syscall(KFN_TXT_GET_CAPS,(long)a,0,0,0)
+#define sys_txt_set_mode(a,b) mcp_syscall(KFN_TXT_SET_MODE,(long)a,(long)b,0,0)
+#define sys_text_setsizes(a) mcp_syscall(KFN_TXT_SETSIZES,(long)a,0,0,0)
+#define sys_txt_set_border(a,b,c) mcp_syscall(KFN_TXT_SET_BORDER,(long)a,(long)b,(long)c,0)
+#define sys_txt_set_border_color(a,b,c,d) mcp_syscall(KFN_TXT_SET_BORDERCOLOR,(long)a,(long)b,(long)c,(long)d)
+#define sys_txt_set_font(a,b,c,d) mcp_syscall(KFN_TXT_SET_FONT,(long)a,(long)b,(long)c,(long)d)
+#define sys_txt_set_cursor(a,b,c,d) mcp_syscall(KFN_TXT_SET_CURSOR,(long)a,(long)b,(long)c,(long)d)
+#define sys_txt_set_region(a,b) mcp_syscall(KFN_TXT_SET_REGION,(long)a,(long)b,0,0)
+#define sys_txt_get_region(a,b) mcp_syscall(KFN_TXT_GET_REGION,(long)a,(long)b,0,0)
+#define sys_txt_set_color(a,b,c) mcp_syscall(KFN_TXT_SET_COLOR,(long)a,(long)b,(long)c,0)
+#define sys_txt_get_color(a,b,c) mcp_syscall(KFN_TXT_GET_COLOR,(long)a,(long)b,(long)c,0)
+#define sys_txt_set_xy(a,b,c) mcp_syscall(KFN_TXT_SET_XY,(long)a,(long)b,(long)c,0)
+#define sys_txt_get_xy(a,b) mcp_syscall(KFN_TXT_GET_XY,(long)a,(long)b,0,0)
+#define sys_txt_scroll(a,b,c) mcp_syscall(KFN_TXT_SCROLL,(long)a,(long)b,(long)c,0)
+#define sys_txt_set_cursor_visible(a,b) mcp_syscall(KFN_TXT_SET_CURSOR_VIS,(long)a,(long)b,0,0)
+#define sys_txt_get_sizes(a,b,c) mcp_syscall(KFN_TXT_GET_SIZES,(long)a,(long)b,(long)c,0)
 
 
 extern long mcp_syscall(long d0, long  d1, long d2, long d3, long d4);
