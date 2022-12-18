@@ -18,7 +18,10 @@ MEMORY
  * grows down
  */
 
-PROVIDE (__stack = 4M - 8);
+/*
+ * If __stack set to 0, the OS supplied stack is used (0x1000 on MCP)
+ */
+PROVIDE (__stack = 0);
 
 /*
  * Initalize some symbols to be zero so we can reference them in the
